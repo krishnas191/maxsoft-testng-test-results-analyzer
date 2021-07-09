@@ -9,6 +9,7 @@ import org.testng.annotations.Listeners;
 
 import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver;
 import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.setDriver;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Project Name    : auto-test-troubleshoot-helper
@@ -27,11 +28,14 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         setDriver(new ChromeDriver());
         getDriver().manage().window().maximize();
+        getDriver().manage().timeouts().implicitlyWait(30, SECONDS);
+        getDriver().manage().timeouts().pageLoadTimeout(60, SECONDS);
         getDriver().get("http://automationpractice.com/index.php?controller=authentication&back=my-account");
     }
 
     @AfterMethod
     public void closeBrowser() {
-        getDriver().quit();
+        if (getDriver() != null)
+            getDriver().quit();
     }
 }

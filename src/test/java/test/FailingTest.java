@@ -19,32 +19,32 @@ import static org.testng.Assert.fail;
 public class FailingTest {
 
     @Test(description = "Failing test simulation 1")
-    public void testFailedMethod1() {
+    public void testFailingMethod1() {
         fail("Failing test simulation 1");
     }
 
     @Test(description = "Failing test simulation 2")
-    public void testFailedMethod2() {
+    public void testFailingMethod2() {
         fail("Failing test simulation 2");
     }
 
     @Test(description = "Failing test simulation 3")
-    public void testFailedMethod3() {
+    public void testFailingMethod3() {
         fail("Failing test simulation 2");
     }
 
     @Test(description = "Failing test simulation 4")
-    public void testFailedMethod4() {
+    public void testFailingMethod4() {
         fail("Failing test simulation 3");
     }
 
     @Test(description = "Failing test simulation 5")
-    public void testFailedMethod5() {
+    public void testFailingMethod5() {
         fail("Failing test simulation 3");
     }
 
     @Test(description = "Failing test simulation 6")
-    public void testFailedMethod6() {
+    public void testFailingMethod6() {
         fail("Failing test simulation 3");
     }
 }

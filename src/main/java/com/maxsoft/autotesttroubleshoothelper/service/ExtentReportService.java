@@ -1,4 +1,4 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.autotesttroubleshoothelper.service;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -13,11 +13,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
-import static com.maxsoft.autotesttroubleshoothelper.Constants.EXTENT_REPORT_DIRECTORY;
-import static com.maxsoft.autotesttroubleshoothelper.Constants.FILE_SEPARATOR;
+import static com.maxsoft.autotesttroubleshoothelper.Constants.*;
 import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver;
 import static com.maxsoft.autotesttroubleshoothelper.PropertyFileReader.getProperty;
 
@@ -90,7 +88,7 @@ public class ExtentReportService {
                             ExtentColor.TRANSPARENT));
                     test.addScreenCaptureFromPath(screenshotPath, iTestResult.getMethod().getMethodName());
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -110,16 +108,16 @@ public class ExtentReportService {
     private String takeScreenshotAndReturnFilePath(String screenshotName, String timestamp) {
         String relativePath = null;
         if (getDriver() != null) {
-            TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
-            File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-            String destination = EXTENT_REPORT_DIRECTORY + FILE_SEPARATOR + "screenshots" + FILE_SEPARATOR +
-                    screenshotName + " - " + timestamp + ".png";
-            relativePath = "screenshots" + FILE_SEPARATOR + screenshotName + " - " + timestamp + ".png";
-            File finalDestination = new File(destination);
             try {
+                TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
+                File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
+                String destination = SCREENSHOTS_DIRECTORY + FILE_SEPARATOR + screenshotName + " - " + timestamp + ".png";
+                relativePath = SCREENSHOT_FOLDER_NAME + FILE_SEPARATOR + screenshotName + " - " + timestamp + ".png";
+                File finalDestination = new File(destination);
                 FileUtils.copyFile(source, finalDestination);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                if(!e.getMessage().contains("Session ID is null. Using WebDriver after calling quit()?"))
+                    e.printStackTrace();
             }
         }
         return relativePath;

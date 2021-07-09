@@ -14,10 +14,10 @@ import static org.testng.Assert.assertEquals;
  * Version         : 1.0.0
  * Date            : 07/02/2021
  * Time            : 3:38 PM
- * Description     : This is the test class to test the login functionality
+ * Description     : This is the mixed class to simulate test passing, failing and skipping
  **/
 
-public class LoginTest extends BaseTest {
+public class MixedTest extends BaseTest {
 
     private LoginPage loginPage;
 
@@ -26,16 +26,21 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage(getDriver());
     }
 
-    @Test(description = "Verify that a valid user can login to the application")
-    public void testValidLogin() {
+    @Test(description = "Passing test simulation")
+    public void testPassingMethod() {
         loginPage.login("osanda@mailinator.com","1qaz2wsx@");
         assertEquals(getDriver().findElement(By.xpath("//div[@class='header_user_info']//span")).getText(),
                 "Osanda Nimalarathna");
     }
 
-    @Test(description = "Verify that an invalid user cannot login to the application")
-    public void testInvalidLogin() {
+    @Test(description = "Failing test simulation")
+    public void testFailingMethod() {
         loginPage.login("osanda@mailinator.com","1qaz2wsx");
         assertEquals(getDriver().getTitle(), "Login - My Storee");
+    }
+
+    @Test(description = "Skipping test simulation", dependsOnMethods = "testFailingMethod")
+    public void testSkippingMethod() {
+        // This method will skip
     }
 }

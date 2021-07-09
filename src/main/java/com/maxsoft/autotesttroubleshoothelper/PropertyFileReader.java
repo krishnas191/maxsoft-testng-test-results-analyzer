@@ -1,10 +1,11 @@
 package com.maxsoft.autotesttroubleshoothelper;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import static com.maxsoft.autotesttroubleshoothelper.Constants.EXTENT_PROPERTY_FILE_DIRECTORY;
 
 /**
  * Project Name    : auto-test-troubleshoot-helper
@@ -17,13 +18,10 @@ import java.util.Properties;
 
 public class PropertyFileReader {
 
-    private static final String fileSeparator = File.separator;
-
     public static String getProperty(String propertyName) {
         String propertyValue = null;
 
-        try (InputStream input = new FileInputStream(System.getProperty("user.dir")  + fileSeparator + "src" +
-                fileSeparator + "test" + fileSeparator + "resources" + fileSeparator + "extent.properties")) {
+        try (InputStream input = new FileInputStream(EXTENT_PROPERTY_FILE_DIRECTORY)) {
             Properties prop = new Properties();
             prop.load(input);
             propertyValue = prop.getProperty(propertyName);

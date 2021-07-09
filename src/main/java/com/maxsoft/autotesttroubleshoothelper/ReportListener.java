@@ -1,11 +1,16 @@
 package com.maxsoft.autotesttroubleshoothelper;
 
+import com.maxsoft.autotesttroubleshoothelper.service.ExcelReportService;
+import com.maxsoft.autotesttroubleshoothelper.service.ExtentReportService;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Project Name    : auto-test-troubleshoot-helper
@@ -19,11 +24,10 @@ import java.util.*;
 public class ReportListener implements ITestListener {
 
     private static final String timestamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
-    private final List<String> failedTestMethodNamesList = new ArrayList<>();
-    private final List<String> failedReasonsList = new ArrayList<>();
+    private final List<ITestResult> testResultsList = new ArrayList<>();
 
-    private ExcelReportService excelReportService;
     private ExtentReportService extentReportService;
+    private ExcelReportService excelReportService;
 
     @Override
     public void onStart(ITestContext iTestContext) {
@@ -40,20 +44,19 @@ public class ReportListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         extentReportService.updateExtentReportOnTestSuccess(iTestResult);
+        testResultsList.add(iTestResult);
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         extentReportService.updateExtentReportOnTestFailure(iTestResult, timestamp);
-
-        failedTestMethodNamesList.add(iTestResult.getName());
-        failedReasonsList.add(iTestResult.getThrowable().getMessage());
-
+        testResultsList.add(iTestResult);
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         extentReportService.updateExtentReportOnTestSkipped(iTestResult);
+        testResultsList.add(iTestResult);
     }
 
     @Override
@@ -65,30 +68,15 @@ public class ReportListener implements ITestListener {
     public void onFinish(ITestContext iTestContext) {
         extentReportService.flushExtentReport();
 
-        failedTestMethodNamesList.forEach(System.out::println);
-        failedReasonsList.forEach(System.out::println);
-
         Map<String, Object[]> failedTestSummaryWorkSheetDataMap = excelReportService
-                .getExcelDataMapForFailedTestSummaryWorkSheet(failedTestMethodNamesList, failedReasonsList);
+                .getExcelDataMapForTestSummaryWorkSheet(testResultsList);
         Map<String, Object[]> failureAnalysisWorkSheetDataMap = excelReportService
-                .getExcelDataMapForFailureAnalysisWorkSheet(failedTestMethodNamesList, failedReasonsList);
-
-        Set<String> duplicateFailureReasons = findDuplicates(failedReasonsList);
-        duplicateFailureReasons.forEach(System.out::println);
+                .getExcelDataMapForFailureAnalysisWorkSheet(testResultsList);
+        Map<String, Object[]> skippedAnalysisWorkSheetDataMap = excelReportService
+                .getExcelDataMapForSkippedAnalysisWorkSheet(testResultsList);
 
         excelReportService
-                .generateExcelReport(failedTestSummaryWorkSheetDataMap, failureAnalysisWorkSheetDataMap, timestamp);
-    }
-
-    private Set<String> findDuplicates(List<String> listContainingDuplicates) {
-        final Set<String> setToReturn = new HashSet<>();
-        final Set<String> tempSet = new HashSet<>();
-
-        for (String text : listContainingDuplicates) {
-            if (!tempSet.add(text)) {
-                setToReturn.add(text);
-            }
-        }
-        return setToReturn;
+                .generateExcelReport(failedTestSummaryWorkSheetDataMap, failureAnalysisWorkSheetDataMap,
+                        skippedAnalysisWorkSheetDataMap, timestamp);
     }
 }

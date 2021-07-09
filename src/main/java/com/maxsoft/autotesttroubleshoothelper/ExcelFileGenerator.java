@@ -26,17 +26,19 @@ public class ExcelFileGenerator {
 
     private static final Logger logger = Logger.getLogger(ExcelFileGenerator.class.getName());
     private static final XSSFWorkbook workbook = new XSSFWorkbook();
-    private static final CellStyle allCellStyle = workbook.createCellStyle();
+    private static final CellStyle cellStyle = workbook.createCellStyle();
     private static final CellStyle headerRowCellStyle = workbook.createCellStyle();
     private static final Font headerRowFont = workbook.createFont();
 
     public static void generateExcel(String firstWorkSheetName, Map<String, Object[]> firstExcelDataMap,
                                      String secondWorkSheetName, Map<String, Object[]> secondExcelDataMap,
+                                     String thirdWorkSheetName, Map<String, Object[]> thirdExcelDataMap,
                                      String filePath) {
 
         // Prepare data object for each worksheet to write to the Excel file
         prepareExcelDataMapToWriteToTheExcelFile(firstWorkSheetName, firstExcelDataMap);
         prepareExcelDataMapToWriteToTheExcelFile(secondWorkSheetName, secondExcelDataMap);
+        prepareExcelDataMapToWriteToTheExcelFile(thirdWorkSheetName, thirdExcelDataMap);
 
         autoSizeColumns();
 
@@ -67,10 +69,12 @@ public class ExcelFileGenerator {
         headerRowCellStyle.setBorderLeft(BorderStyle.MEDIUM);
 
         // Set other rows cell style
-        allCellStyle.setBorderBottom(BorderStyle.MEDIUM);
-        allCellStyle.setBorderTop(BorderStyle.MEDIUM);
-        allCellStyle.setBorderRight(BorderStyle.MEDIUM);
-        allCellStyle.setBorderLeft(BorderStyle.MEDIUM);
+        cellStyle.setBorderBottom(BorderStyle.MEDIUM);
+        cellStyle.setBorderTop(BorderStyle.MEDIUM);
+        cellStyle.setBorderRight(BorderStyle.MEDIUM);
+        cellStyle.setBorderLeft(BorderStyle.MEDIUM);
+        cellStyle.setWrapText(true);
+        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
 
         XSSFSheet workSheet = workbook.createSheet(workSheetName);
         int rowId = 0;
@@ -86,7 +90,7 @@ public class ExcelFileGenerator {
                 if(key.equals("1")) {
                     cell.setCellStyle(headerRowCellStyle);
                 } else {
-                    cell.setCellStyle(allCellStyle);
+                    cell.setCellStyle(cellStyle);
                 }
             }
         }
@@ -103,7 +107,7 @@ public class ExcelFileGenerator {
                 int columnIndex = cell.getColumnIndex();
                 sheet.autoSizeColumn(columnIndex);
                 int currentColumnWidth = sheet.getColumnWidth(columnIndex);
-                sheet.setColumnWidth(columnIndex, (currentColumnWidth + 2500));
+                sheet.setColumnWidth(columnIndex, Math.min(currentColumnWidth, 36000));
             }
         });
     }
