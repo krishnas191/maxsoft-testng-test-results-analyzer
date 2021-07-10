@@ -1,14 +1,14 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.testresultsanalyzer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.maxsoft.autotesttroubleshoothelper.Constants.EXTENT_PROPERTY_FILE_DIRECTORY;
+import static com.maxsoft.testresultsanalyzer.Constants.TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/02/2021
@@ -21,7 +21,7 @@ public class PropertyFileReader {
     public static String getProperty(String propertyName) {
         String propertyValue = null;
 
-        try (InputStream input = new FileInputStream(EXTENT_PROPERTY_FILE_DIRECTORY)) {
+        try (InputStream input = new FileInputStream(TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY)) {
             Properties prop = new Properties();
             prop.load(input);
             propertyValue = prop.getProperty(propertyName);

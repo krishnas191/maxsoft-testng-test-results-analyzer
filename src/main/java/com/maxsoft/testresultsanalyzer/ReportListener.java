@@ -1,7 +1,7 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.testresultsanalyzer;
 
-import com.maxsoft.autotesttroubleshoothelper.service.ExcelReportService;
-import com.maxsoft.autotesttroubleshoothelper.service.ExtentReportService;
+import com.maxsoft.testresultsanalyzer.services.ExcelReportService;
+import com.maxsoft.testresultsanalyzer.services.ExtentReportService;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/02/2021
  * Time            : 12:38 PM
- * Description     : This is the listener class that used to listen to the TestNG test execution and create the extent report
+ * Description     : This is the listener class that used to listen to the TestNG test execution and create the reports
  **/
 
 public class ReportListener implements ITestListener {
@@ -38,7 +38,6 @@ public class ReportListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        extentReportService.getExtentTest(iTestResult);
     }
 
     @Override
@@ -61,7 +60,6 @@ public class ReportListener implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-
     }
 
     @Override

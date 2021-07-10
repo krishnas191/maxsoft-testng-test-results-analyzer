@@ -1,15 +1,15 @@
-package test;
+package tests;
 
-import org.openqa.selenium.By;
+import com.maxsoft.testresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.LoginPage;
+import pages.HomePage;
 
-import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver;
+import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/02/2021
@@ -19,23 +19,22 @@ import static org.testng.Assert.assertEquals;
 
 public class PassingTest extends BaseTest {
 
-    private LoginPage loginPage;
+    private HomePage homePage;
 
     @BeforeMethod
     public void before() {
-        loginPage = new LoginPage(getDriver());
+        homePage = new HomePage(getDriver());
     }
 
+    @Category("Passing category in PassingTest class")
     @Test(description = "Passing test simulation 1")
     public void testPassingMethod1() {
-        loginPage.login("osanda@mailinator.com","1qaz2wsx@");
-        assertEquals(getDriver().findElement(By.xpath("//div[@class='header_user_info']//span")).getText(),
-                "Osanda Nimalarathna");
+        assertEquals(homePage.getProfileName(), "Osanda Deshan Nimalarathna");
     }
 
+    @Category("Passing category in PassingTest class")
     @Test(description = "Passing test simulation 2")
     public void testPassingMethod2() {
-        loginPage.login("osanda@mailinator.com","1qaz2wsx");
-        assertEquals(getDriver().getTitle(), "Login - My Store");
+        assertEquals(homePage.getUsername(), "osandadeshan");
     }
 }

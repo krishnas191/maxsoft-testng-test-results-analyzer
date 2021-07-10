@@ -1,15 +1,15 @@
-package test;
+package tests;
 
-import org.openqa.selenium.By;
+import com.maxsoft.testresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.LoginPage;
+import pages.HomePage;
 
-import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver;
+import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/02/2021
@@ -19,26 +19,26 @@ import static org.testng.Assert.assertEquals;
 
 public class MixedTest extends BaseTest {
 
-    private LoginPage loginPage;
+    private HomePage homePage;
 
     @BeforeMethod
     public void before() {
-        loginPage = new LoginPage(getDriver());
+        homePage = new HomePage(getDriver());
     }
 
+    @Category("Passing category in MixedTest class")
     @Test(description = "Passing test simulation")
     public void testPassingMethod() {
-        loginPage.login("osanda@mailinator.com","1qaz2wsx@");
-        assertEquals(getDriver().findElement(By.xpath("//div[@class='header_user_info']//span")).getText(),
-                "Osanda Nimalarathna");
+        assertEquals(homePage.getProfileName(), "Osanda Deshan Nimalarathna");
     }
 
+    @Category("Failing category in MixedTest class")
     @Test(description = "Failing test simulation")
     public void testFailingMethod() {
-        loginPage.login("osanda@mailinator.com","1qaz2wsx");
-        assertEquals(getDriver().getTitle(), "Login - My Storee");
+        assertEquals(homePage.getProfileName(), "Osanda Deshan");
     }
 
+    @Category("Skipping category in MixedTest class")
     @Test(description = "Skipping test simulation", dependsOnMethods = "testFailingMethod")
     public void testSkippingMethod() {
         // This method will skip

@@ -1,9 +1,11 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.testresultsanalyzer;
 
 import java.io.File;
 
+import static com.maxsoft.testresultsanalyzer.PropertyFileReader.getProperty;
+
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 7/4/2021
@@ -16,15 +18,16 @@ public class Constants {
     // Directory constants
     public static final String FILE_SEPARATOR = File.separator;
     public static final String PROJECT_DIRECTORY = System.getProperty("user.dir");
-    public static final String REPORT_DIRECTORY = PROJECT_DIRECTORY + FILE_SEPARATOR + "reports";
-    public static final String EXTENT_PROPERTY_FILE_DIRECTORY = PROJECT_DIRECTORY  + FILE_SEPARATOR + "src" + FILE_SEPARATOR
-            + "test" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR + "extent.properties";
-    public static final String EXTENT_REPORT_DIRECTORY = REPORT_DIRECTORY + FILE_SEPARATOR + "html-report";
-    public static final String SCREENSHOT_FOLDER_NAME = "screenshots";
-    public static final String SCREENSHOTS_DIRECTORY = EXTENT_REPORT_DIRECTORY + FILE_SEPARATOR + SCREENSHOT_FOLDER_NAME;
-    public static final String EXCEL_SUMMARY_REPORT_DIRECTORY = REPORT_DIRECTORY + FILE_SEPARATOR + "summary-report";
-    public static final String EXTENT_REPORT_PREFIX = "test_execution_results_";
-    public static final String EXCEL_SUMMARY_REPORT_PREFIX = "test_analysis_report_";
+    public static final String TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY = PROJECT_DIRECTORY + FILE_SEPARATOR
+            + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR
+            + "test-results-analyzer.properties";
+    public static final String EXTENT_FULL_REPORT_DIRECTORY = getProperty("extent_full_report_dir");
+    public static final String SCREENSHOTS_DIRECTORY = getProperty("extent_screenshots_dir");
+    public static final String TEST_ANALYSIS_REPORT_DIRECTORY = getProperty("test_analysis_reports_dir");
+
+    // Reporter constants
+    public static final String EXTENT_REPORT_FILE_NAME_PREFIX = getProperty("extent_report_file_name_prefix");
+    public static final String TEST_ANALYSIS_REPORT_FILE_NAME_PREFIX = getProperty("test_analysis_report_file_name_prefix");
 
     // Test result constants
     public static final String PASSED = "PASSED";

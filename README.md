@@ -1,10 +1,10 @@
-# MaxSoft Auto Test Troubleshoot Helper
+# MaxSoft Test Results Analyzer
 
 ## Introduction
-The main reason for developing this plugin is to provide an easy way to troubleshoot the failed tests 
+The main reason for developing this plugin is to provide an easy way to analyze the failed and skipped tests 
 in test automation. 
 
-MaxSoft Auto Test Troubleshoot Helper comes with a built-in failed tests grouping
+MaxSoft Test Results Analyzer comes with a built-in failed tests grouping
 mechanism. It will generate an Excel file with the failed tests against the reason. On the same Excel
 file, the second tab contains the failure reasons grouping. So it would be easy to identify the tests 
 which failed due to the same reason.
@@ -12,7 +12,17 @@ which failed due to the same reason.
 Further, this library has built-in Extent reporter as well. So, no need to worry about the HTML report 
 generation for test executions.
 
-![](https://github.com/osandadeshan/maxsoft-extent-reporter/blob/master/extent-report-sample.PNG)
+> Dashboard
+![image](https://user-images.githubusercontent.com/9147189/125170847-98eb4480-e1ce-11eb-9920-6d646fbb0013.png)
+
+> Tests
+![image](https://user-images.githubusercontent.com/9147189/125170925-1c0c9a80-e1cf-11eb-8a93-1fc082faab0c.png)
+
+> Categories
+![image](https://user-images.githubusercontent.com/9147189/125170962-43636780-e1cf-11eb-9767-1ef11709a687.png)
+
+> Exceptions
+![image](https://user-images.githubusercontent.com/9147189/125170987-6261f980-e1cf-11eb-8cbc-1787e07f634f.png)
 
 ## Advantages
 - Automatically generates the Test Analysis Report after the test execution.
@@ -42,7 +52,7 @@ generation for test executions.
 2. Maven
 
 **Steps:**
-1. Add "**MaxSoft Auto Test Troubleshoot Helper**" dependency into "**pom.xml**".
+1. Add "**MaxSoft Test Results Analyzer**" dependency into "**pom.xml**".
 ```xml
     <repositories>
         <repository>
@@ -54,17 +64,23 @@ generation for test executions.
     <dependencies>
         <dependency>
             <groupId>com.github.osandadeshan</groupId>
-            <artifactId>auto-test-troubleshoot-helper</artifactId>
+            <artifactId>maxsoft-test-results-analyzer</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
 ```
 
-2. Create "**extent.properties**" in "***src/test/resources/extent.properties***".
+2. Create "**test-results-analyzer.properties**" in "***src/test/resources***".
 ```xml
+# Test Analyzer Report Configs
+extent_full_report_dir=./reports/html-reports
+extent_screenshots_dir=./reports/html-reports/screenshots
+test_analysis_reports_dir=./reports/test-analysis-reports
+extent_report_file_name_prefix=test_execution_results_
+test_analysis_report_file_name_prefix=test_analysis_report_
+
 # Extent Report Configs
 extent_reporter_theme=dark
-capture_screenshot_on_failure=true
 extent_document_title=Test Execution Report
 extent_reporter_name=Test Execution Report
 application_name=AutomationPractice.com
@@ -76,13 +92,13 @@ test_developer=Osanda Nimalarathna
 
 3. In the test automation code, find the place you are launching the WebDriver.
 
-4. Pass your WebDriver object to the "**setDriver()**" method which can be imported from "***com.maxsoft.autotesttroubleshoothelper.DriverHolder.setDriver***".
+4. Pass your WebDriver object to the "**setDriver()**" method which can be imported from "***import static com.maxsoft.testresultsanalyzer.DriverHolder.setDriver***".
 ```java
 WebDriver driver = new ChromeDriver();
 setDriver(driver);
 ```
 
-5.  Update the places where your are using WebDriver object, into "**getDriver()**" method which can be imported from "***com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver***".
+5.  Update the places where your are using WebDriver object, into "**getDriver()**" method which can be imported from "***import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver***".
 ```java
 getDriver().manage().window().maximize();
 ```
@@ -90,7 +106,7 @@ getDriver().manage().window().maximize();
 6. An example test class.
 
 ```java
-package test;
+package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -100,17 +116,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.maxsoft.testresultsanalyzer.annotations.Category;
 
-import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.getDriver;
-import static com.maxsoft.autotesttroubleshoothelper.DriverHolder.setDriver;
-import static com.maxsoft.autotesttroubleshoothelper.PropertyFileReader.getProperty;
+import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testresultsanalyzer.DriverHolder.setDriver;
+import static com.maxsoft.testresultsanalyzer.PropertyFileReader.getProperty;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
- * Date            : 07/04/2021
+ * Date            : 07/10/2021
  * Time            : 1:08 PM
  * Description     : This is a test class to test the login functionality
  **/
@@ -133,6 +150,7 @@ public class LoginTest {
         signInButton = getDriver().findElement(By.id("SubmitLogin"));
     }
 
+    @Category("Login")
     @Test(description = "Verify that a valid user can login to the application")
     public void testValidLogin() {
         emailTextBox.sendKeys("osanda@mailinator.com");
@@ -141,6 +159,7 @@ public class LoginTest {
         assertEquals(getDriver().findElement(By.xpath("//div[@class='header_user_info']//span")).getText(), "Osanda Nimalarathna");
     }
 
+    @Category("Login")
     @Test(description = "Verify that an invalid user cannot login to the application")
     public void testInvalidLogin() {
         emailTextBox.sendKeys("osanda@mailinator.com");
@@ -157,26 +176,26 @@ public class LoginTest {
 
 ```
 
-7. Create the "**TestNG.xml**" by adding the "**MaxSoft Auto Test Troubleshoot Helper**" class.
+7. Create the "**testng.xml**" by adding the "**MaxSoft Test Results Analyzer**" class.
 
 ```xml
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Regression Test Suite">
     <listeners>
-        <listener class-name="com.maxsoft.autotesttroubleshoothelper.ReportListener"/>
+        <listener class-name="com.maxsoft.testresultsanalyzer.ReportListener"/>
     </listeners>
     <test name="Regression Test">
         <classes>
-            <class name="test.LoginTest"/>
+            <class name="tests.LoginTest"/>
         </classes>
     </test>
 </suite>
 ```
 
-8. Run the "**TestNG.xml**".
+8. Run the "**testng.xml**".
 
 ## License
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/License_icon-mit-2.svg/2000px-License_icon-mit-2.svg.png" alt="MIT License" width="100" height="100"/> [MaxSoft Auto Test Troubleshoot Helper](https://medium.com/maxsoft-auto-test-troubleshoot-helper) is released under [MIT License](https://opensource.org/licenses/MIT)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/License_icon-mit-2.svg/2000px-License_icon-mit-2.svg.png" alt="MIT License" width="100" height="100"/> [MaxSoft Test Results Analyzer](https://medium.com/maxsoft-test-results-analyzer) is released under [MIT License](https://opensource.org/licenses/MIT)
 
 ## Copyright
 Copyright 2021 MaxSoft.

@@ -1,9 +1,9 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.testresultsanalyzer;
 
 import org.openqa.selenium.WebDriver;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/02/2021

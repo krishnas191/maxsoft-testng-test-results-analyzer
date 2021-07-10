@@ -1,4 +1,4 @@
-package com.maxsoft.autotesttroubleshoothelper;
+package com.maxsoft.testresultsanalyzer;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 /**
- * Project Name    : auto-test-troubleshoot-helper
+ * Project Name    : maxsoft-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 7/2/2021
@@ -87,7 +87,7 @@ public class ExcelFileGenerator {
             for (Object obj : objectArr) {
                 Cell cell = row.createCell(cellId++);
                 cell.setCellValue((String) obj);
-                if(key.equals("1")) {
+                if (key.equals("1")) {
                     cell.setCellStyle(headerRowCellStyle);
                 } else {
                     cell.setCellStyle(cellStyle);
