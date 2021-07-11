@@ -1,10 +1,10 @@
-# MaxSoft Test Results Analyzer
+# MaxSoft TestNG Test Results Analyzer
 
 ## Introduction
 The main reason for developing this plugin is to provide an easy way to analyze the failed and skipped tests 
 in test automation. 
 
-MaxSoft Test Results Analyzer comes with a built-in failed tests grouping
+MaxSoft TestNG Test Results Analyzer comes with a built-in failed tests grouping
 mechanism. It will generate an Excel file with the failed tests against the reason. On the same Excel
 file, the second tab contains the failure reasons grouping. So it would be easy to identify the tests 
 which failed due to the same reason.
@@ -12,6 +12,17 @@ which failed due to the same reason.
 Further, this library has built-in Extent reporter as well. So, no need to worry about the HTML report 
 generation for test executions.
 
+#### Test Analysis Report Features
+> Test Summary
+![image](https://user-images.githubusercontent.com/9147189/125182967-29a63c80-e230-11eb-8711-5a5fbc948f1a.png)
+
+> Failure Analysis
+![image](https://user-images.githubusercontent.com/9147189/125182985-493d6500-e230-11eb-9136-caffb10d0918.png)
+
+> Skipped Analysis
+![image](https://user-images.githubusercontent.com/9147189/125183007-7b4ec700-e230-11eb-866c-68831207753b.png)
+
+#### Extent Report Features
 > Dashboard
 ![image](https://user-images.githubusercontent.com/9147189/125170847-98eb4480-e1ce-11eb-9920-6d646fbb0013.png)
 
@@ -33,6 +44,7 @@ generation for test executions.
 
 ## Technologies/Frameworks Used
 - Java
+- TestNG
 - Apache POI  
 - Extent Report
 - Selenium
@@ -52,7 +64,7 @@ generation for test executions.
 2. Maven
 
 **Steps:**
-1. Add "**MaxSoft Test Results Analyzer**" dependency into "**pom.xml**".
+1. Add "**MaxSoft TestNG Test Results Analyzer**" dependency into "**pom.xml**".
 ```xml
     <repositories>
         <repository>
@@ -64,7 +76,7 @@ generation for test executions.
     <dependencies>
         <dependency>
             <groupId>com.github.osandadeshan</groupId>
-            <artifactId>maxsoft-test-results-analyzer</artifactId>
+            <artifactId>maxsoft-testng-test-results-analyzer</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
@@ -92,13 +104,13 @@ test_developer=Osanda Nimalarathna
 
 3. In the test automation code, find the place you are launching the WebDriver.
 
-4. Pass your WebDriver object to the "**setDriver()**" method which can be imported from "***import static com.maxsoft.testresultsanalyzer.DriverHolder.setDriver***".
+4. Pass your WebDriver object to the "**setDriver()**" method which can be imported from "***import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.setDriver***".
 ```java
 WebDriver driver = new ChromeDriver();
 setDriver(driver);
 ```
 
-5.  Update the places where your are using WebDriver object, into "**getDriver()**" method which can be imported from "***import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver***".
+5.  Update the places where your are using WebDriver object, into "**getDriver()**" method which can be imported from "***import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver***".
 ```java
 getDriver().manage().window().maximize();
 ```
@@ -116,15 +128,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.maxsoft.testresultsanalyzer.annotations.Category;
+import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 
-import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
-import static com.maxsoft.testresultsanalyzer.DriverHolder.setDriver;
-import static com.maxsoft.testresultsanalyzer.PropertyFileReader.getProperty;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.setDriver;
+import static com.maxsoft.testngtestresultsanalyzer.PropertyFileReader.getProperty;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Project Name    : maxsoft-test-results-analyzer
+ * Project Name    : maxsoft-testng-test-results-analyzer
  * Developer       : Osanda Deshan
  * Version         : 1.0.0
  * Date            : 07/10/2021
@@ -176,13 +188,13 @@ public class LoginTest {
 
 ```
 
-7. Create the "**testng.xml**" by adding the "**MaxSoft Test Results Analyzer**" class.
+7. Create the "**testng.xml**" by adding the "**MaxSoft TestNG Test Results Analyzer**" class.
 
 ```xml
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Regression Test Suite">
     <listeners>
-        <listener class-name="com.maxsoft.testresultsanalyzer.ReportListener"/>
+        <listener class-name="com.maxsoft.testngtestresultsanalyzer.ReportListener"/>
     </listeners>
     <test name="Regression Test">
         <classes>
@@ -195,7 +207,7 @@ public class LoginTest {
 8. Run the "**testng.xml**".
 
 ## License
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/License_icon-mit-2.svg/2000px-License_icon-mit-2.svg.png" alt="MIT License" width="100" height="100"/> [MaxSoft Test Results Analyzer](https://medium.com/maxsoft-test-results-analyzer) is released under [MIT License](https://opensource.org/licenses/MIT)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/License_icon-mit-2.svg/2000px-License_icon-mit-2.svg.png" alt="MIT License" width="100" height="100"/> [MaxSoft TestNG Test Results Analyzer](https://medium.com/maxsoft-testng-test-results-analyzer) is released under [MIT License](https://opensource.org/licenses/MIT)
 
 ## Copyright
 Copyright 2021 MaxSoft.

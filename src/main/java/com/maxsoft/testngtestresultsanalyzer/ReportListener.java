@@ -1,7 +1,7 @@
-package com.maxsoft.testresultsanalyzer;
+package com.maxsoft.testngtestresultsanalyzer;
 
-import com.maxsoft.testresultsanalyzer.services.ExcelReportService;
-import com.maxsoft.testresultsanalyzer.services.ExtentReportService;
+import com.maxsoft.testngtestresultsanalyzer.services.ExcelReportService;
+import com.maxsoft.testngtestresultsanalyzer.services.ExtentReportService;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;

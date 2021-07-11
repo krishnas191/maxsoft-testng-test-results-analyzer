@@ -1,11 +1,11 @@
 package tests;
 
-import com.maxsoft.testresultsanalyzer.annotations.Category;
+import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
-import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -32,6 +32,7 @@ public class MixedTest extends BaseTest {
         assertEquals(homePage.getProfileName(), "Osanda Deshan Nimalarathna");
     }
 
+    @SuppressWarnings("TestFailedLine")
     @Category("Failing category in MixedTest class")
     @Test(description = "Failing test simulation")
     public void testFailingMethod() {
@@ -41,6 +42,6 @@ public class MixedTest extends BaseTest {
     @Category("Skipping category in MixedTest class")
     @Test(description = "Skipping test simulation", dependsOnMethods = "testFailingMethod")
     public void testSkippingMethod() {
-        // This method will skip
+        System.out.println("'testSkippingMethod' method will skip");
     }
 }

@@ -1,7 +1,7 @@
 package tests;
 
-import com.maxsoft.testresultsanalyzer.ReportListener;
-import com.maxsoft.testresultsanalyzer.annotations.Category;
+import com.maxsoft.testngtestresultsanalyzer.ReportListener;
+import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -28,12 +28,12 @@ public class SkippingTest {
     @Category("Skipping category in SkippingTest class")
     @Test(description = "Skipping test simulation 1")
     public void testSkippingMethod1() {
-        // This method will skip
+        System.out.println("'testSkippingMethod1' method will skip");
     }
 
     @Category("Skipping category in SkippingTest class")
     @Test(description = "Skipping test simulation 2")
     public void testSkippingMethod2() {
-        // This method will skip
+        System.out.println("'testSkippingMethod2' method will skip");
     }
 }

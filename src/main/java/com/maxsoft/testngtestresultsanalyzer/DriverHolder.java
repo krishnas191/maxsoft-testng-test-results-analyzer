@@ -1,4 +1,4 @@
-package com.maxsoft.testresultsanalyzer;
+package com.maxsoft.testngtestresultsanalyzer;
 
 import org.openqa.selenium.WebDriver;
 

@@ -1,4 +1,4 @@
-package com.maxsoft.testresultsanalyzer;
+package com.maxsoft.testngtestresultsanalyzer;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -45,7 +45,8 @@ public class ExcelFileGenerator {
         // Write the workbook as an Excel file
         try {
             File excelFile = new File(filePath);
-            excelFile.getParentFile().mkdirs();
+            final boolean isParentFileCreationSuccessful = excelFile.getParentFile().mkdirs();
+            logger.info("Is test analysis reports directory exists? " + !isParentFileCreationSuccessful);
             FileOutputStream out = new FileOutputStream(excelFile);
             workbook.write(out);
             out.close();
@@ -58,39 +59,42 @@ public class ExcelFileGenerator {
 
     private static void prepareExcelDataMapToWriteToTheExcelFile(String workSheetName, Map<String, Object[]> excelDataMap) {
 
-        // Set header row font and cell style
-        headerRowFont.setBold(true);
-        headerRowCellStyle.setFont(headerRowFont);
-        headerRowCellStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-        headerRowCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        headerRowCellStyle.setBorderBottom(BorderStyle.MEDIUM);
-        headerRowCellStyle.setBorderTop(BorderStyle.MEDIUM);
-        headerRowCellStyle.setBorderRight(BorderStyle.MEDIUM);
-        headerRowCellStyle.setBorderLeft(BorderStyle.MEDIUM);
+        if (excelDataMap.size() > 1) {
 
-        // Set other rows cell style
-        cellStyle.setBorderBottom(BorderStyle.MEDIUM);
-        cellStyle.setBorderTop(BorderStyle.MEDIUM);
-        cellStyle.setBorderRight(BorderStyle.MEDIUM);
-        cellStyle.setBorderLeft(BorderStyle.MEDIUM);
-        cellStyle.setWrapText(true);
-        cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
+            // Set header row font and cell style
+            headerRowFont.setBold(true);
+            headerRowCellStyle.setFont(headerRowFont);
+            headerRowCellStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+            headerRowCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            headerRowCellStyle.setBorderBottom(BorderStyle.MEDIUM);
+            headerRowCellStyle.setBorderTop(BorderStyle.MEDIUM);
+            headerRowCellStyle.setBorderRight(BorderStyle.MEDIUM);
+            headerRowCellStyle.setBorderLeft(BorderStyle.MEDIUM);
 
-        XSSFSheet workSheet = workbook.createSheet(workSheetName);
-        int rowId = 0;
+            // Set other rows cell style
+            cellStyle.setBorderBottom(BorderStyle.MEDIUM);
+            cellStyle.setBorderTop(BorderStyle.MEDIUM);
+            cellStyle.setBorderRight(BorderStyle.MEDIUM);
+            cellStyle.setBorderLeft(BorderStyle.MEDIUM);
+            cellStyle.setWrapText(true);
+            cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
 
-        for (String key : excelDataMap.keySet()) {
-            XSSFRow row = workSheet.createRow(rowId++);
-            Object[] objectArr = excelDataMap.get(key);
-            int cellId = 0;
+            XSSFSheet workSheet = workbook.createSheet(workSheetName);
+            int rowId = 0;
 
-            for (Object obj : objectArr) {
-                Cell cell = row.createCell(cellId++);
-                cell.setCellValue((String) obj);
-                if (key.equals("1")) {
-                    cell.setCellStyle(headerRowCellStyle);
-                } else {
-                    cell.setCellStyle(cellStyle);
+            for (String key : excelDataMap.keySet()) {
+                XSSFRow row = workSheet.createRow(rowId++);
+                Object[] objectArr = excelDataMap.get(key);
+                int cellId = 0;
+
+                for (Object obj : objectArr) {
+                    Cell cell = row.createCell(cellId++);
+                    cell.setCellValue((String) obj);
+                    if (key.equals("1")) {
+                        cell.setCellStyle(headerRowCellStyle);
+                    } else {
+                        cell.setCellStyle(cellStyle);
+                    }
                 }
             }
         }

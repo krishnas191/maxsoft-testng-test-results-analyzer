@@ -1,11 +1,11 @@
 package tests;
 
-import com.maxsoft.testresultsanalyzer.annotations.Category;
+import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
-import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
 import static org.testng.Assert.assertEquals;
 
 /**

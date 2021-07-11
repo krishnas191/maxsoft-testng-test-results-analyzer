@@ -1,4 +1,4 @@
-package com.maxsoft.testresultsanalyzer.annotations;
+package com.maxsoft.testngtestresultsanalyzer.annotations;
 
 import java.lang.reflect.Method;
 
@@ -14,13 +14,12 @@ import java.lang.reflect.Method;
 public class AnnotationReader {
 
     public static String getTestMethodCategory(Class<?> testClass, String testMethodName) {
-        String categoryName;
+        String categoryName = null;
         try {
             Method method = testClass.getMethod(testMethodName);
             Category category = method.getAnnotation(Category.class);
-            categoryName = category.value();
-        } catch (NoSuchMethodException e) {
-            categoryName = null;
+            if (category != null) categoryName = category.value();
+        } catch (NoSuchMethodException ignored) {
         }
         return categoryName;
     }

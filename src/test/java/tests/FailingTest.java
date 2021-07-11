@@ -1,7 +1,7 @@
 package tests;
 
-import com.maxsoft.testresultsanalyzer.ReportListener;
-import com.maxsoft.testresultsanalyzer.annotations.Category;
+import com.maxsoft.testngtestresultsanalyzer.ReportListener;
+import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -16,6 +16,7 @@ import static org.testng.Assert.fail;
  * Description     : This is the failing class to simulate test failures
  **/
 
+@SuppressWarnings("TestFailedLine")
 @Listeners(ReportListener.class)
 public class FailingTest {
 

@@ -1,14 +1,14 @@
 package tests;
 
-import com.maxsoft.testresultsanalyzer.ReportListener;
+import com.maxsoft.testngtestresultsanalyzer.ReportListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
-import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
-import static com.maxsoft.testresultsanalyzer.DriverHolder.setDriver;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.setDriver;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**

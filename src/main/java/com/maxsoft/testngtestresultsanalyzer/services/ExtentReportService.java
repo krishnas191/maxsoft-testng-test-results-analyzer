@@ -1,4 +1,4 @@
-package com.maxsoft.testresultsanalyzer.services;
+package com.maxsoft.testngtestresultsanalyzer.services;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -14,10 +14,10 @@ import org.testng.ITestResult;
 import java.io.File;
 
 import static com.aventstack.extentreports.reporter.configuration.ViewName.*;
-import static com.maxsoft.testresultsanalyzer.Constants.*;
-import static com.maxsoft.testresultsanalyzer.DriverHolder.getDriver;
-import static com.maxsoft.testresultsanalyzer.PropertyFileReader.getProperty;
-import static com.maxsoft.testresultsanalyzer.annotations.AnnotationReader.getTestMethodCategory;
+import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
+import static com.maxsoft.testngtestresultsanalyzer.PropertyFileReader.getProperty;
+import static com.maxsoft.testngtestresultsanalyzer.annotations.AnnotationReader.getTestMethodCategory;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer
@@ -39,7 +39,7 @@ public class ExtentReportService {
                 + FILE_SEPARATOR + EXTENT_REPORT_FILE_NAME_PREFIX + timestamp + ".html")
                 .viewConfigurer()
                 .viewOrder()
-                .as(new ViewName[] {DASHBOARD, TEST, CATEGORY, EXCEPTION})
+                .as(new ViewName[]{DASHBOARD, TEST, CATEGORY, EXCEPTION})
                 .apply();
 
         extent.attachReporter(sparkAllTestsReporter);
@@ -66,39 +66,53 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSuccess(ITestResult iTestResult) {
-        extent.createTest(iTestResult.getName())
+        ExtentTest passedTest = extent.createTest(iTestResult.getName())
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
-                .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
-                .assignCategory(getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName()));
+                .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription());
+
+        String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
+
+        if (category != null)
+            passedTest.assignCategory(category);
     }
 
     public void updateExtentReportOnTestFailure(ITestResult iTestResult, String timestamp) {
-        ExtentTest failedTest = extent.createTest(iTestResult.getName())
-                .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
+        ExtentTest failedTest = extent.createTest(iTestResult.getName());
+        failedTest.info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
-                .assignCategory(getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName()))
                 .createNode("<b> Error Details: </b>")
                 .fail("<b> Error Message: </b> <br />" + iTestResult.getThrowable().getMessage())
                 .fail(iTestResult.getThrowable());
 
         String screenshotPath = takeScreenshotAndReturnFilePath(iTestResult.getName(), timestamp);
 
-        if(screenshotPath != null)
+        if (screenshotPath != null)
             failedTest
+                    .createNode("<b> Screenshot: </b>")
                     .fail(MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+
+        String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
+
+        if (category != null)
+            failedTest.assignCategory(category);
     }
 
     public void updateExtentReportOnTestSkipped(ITestResult iTestResult) {
-        extent.createTest(iTestResult.getName())
+        ExtentTest skippedTest = extent.createTest(iTestResult.getName());
+        skippedTest
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
-                .assignCategory(getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName()))
                 .createNode("<b> Error Details: </b>")
                 .skip("<b> Error Message: </b> <br />" + iTestResult.getThrowable().getMessage())
                 .skip(iTestResult.getThrowable());
+
+        String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
+
+        if (category != null)
+            skippedTest.assignCategory(category);
     }
 
     public void flushExtentReport() {

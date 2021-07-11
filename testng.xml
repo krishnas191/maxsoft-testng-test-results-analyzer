@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Regression Test Suite">
 <!--    <listeners>-->
-<!--        <listener class-name="com.maxsoft.testresultsanalyzer.ReportListener"/>-->
+<!--        <listener class-name="com.maxsoft.testngtestresultsanalyzer.ReportListener"/>-->
 <!--    </listeners>-->
     <test name="Regression Test">
         <classes>

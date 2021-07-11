@@ -1,11 +1,11 @@
-package com.maxsoft.testresultsanalyzer;
+package com.maxsoft.testngtestresultsanalyzer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.maxsoft.testresultsanalyzer.Constants.TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY;
+import static com.maxsoft.testngtestresultsanalyzer.Constants.TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer

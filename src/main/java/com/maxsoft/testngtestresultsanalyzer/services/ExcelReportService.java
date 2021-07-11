@@ -1,11 +1,11 @@
-package com.maxsoft.testresultsanalyzer.services;
+package com.maxsoft.testngtestresultsanalyzer.services;
 
 import org.testng.ITestResult;
 
 import java.util.*;
 
-import static com.maxsoft.testresultsanalyzer.Constants.*;
-import static com.maxsoft.testresultsanalyzer.ExcelFileGenerator.generateExcel;
+import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
+import static com.maxsoft.testngtestresultsanalyzer.ExcelFileGenerator.generateExcel;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer

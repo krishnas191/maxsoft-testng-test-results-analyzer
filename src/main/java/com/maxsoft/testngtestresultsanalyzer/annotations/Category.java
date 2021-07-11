@@ -1,4 +1,4 @@
-package com.maxsoft.testresultsanalyzer.annotations;
+package com.maxsoft.testngtestresultsanalyzer.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

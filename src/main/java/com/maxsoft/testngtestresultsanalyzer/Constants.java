@@ -1,8 +1,8 @@
-package com.maxsoft.testresultsanalyzer;
+package com.maxsoft.testngtestresultsanalyzer;
 
 import java.io.File;
 
-import static com.maxsoft.testresultsanalyzer.PropertyFileReader.getProperty;
+import static com.maxsoft.testngtestresultsanalyzer.PropertyFileReader.getProperty;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer
