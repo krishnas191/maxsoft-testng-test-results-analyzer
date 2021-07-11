@@ -4,10 +4,7 @@
 The main reason for developing this plugin is to provide an easy way to analyze the failed and skipped tests 
 in test automation. 
 
-MaxSoft TestNG Test Results Analyzer comes with a built-in failed tests grouping
-mechanism. It will generate an Excel file with the failed tests against the reason. On the same Excel
-file, the second tab contains the failure reasons grouping. So it would be easy to identify the tests 
-which failed due to the same reason.
+MaxSoft TestNG Test Results Analyzer comes with a built-in failed tests grouping mechanism. It will generate an Excel file with the failed and skipped tests against the reason. On the same Excel file, the second and third tab contains the failure and skipped reasons grouping. So it would be easy to identify the tests which failed or skipped due to the same reason.
 
 Further, this library has built-in Extent reporter as well. So, no need to worry about the HTML report 
 generation for test executions.
