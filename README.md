@@ -12,7 +12,7 @@ which failed due to the same reason.
 Further, this library has built-in Extent reporter as well. So, no need to worry about the HTML report 
 generation for test executions.
 
-#### Test Analysis Report Features
+#### 1. Test Analysis Report Features
 > Test Summary
 ![image](https://user-images.githubusercontent.com/9147189/125182967-29a63c80-e230-11eb-8711-5a5fbc948f1a.png)
 
@@ -22,7 +22,7 @@ generation for test executions.
 > Skipped Analysis
 ![image](https://user-images.githubusercontent.com/9147189/125183007-7b4ec700-e230-11eb-866c-68831207753b.png)
 
-#### Extent Report Features
+#### 2. Extent Report Features
 > Dashboard
 ![image](https://user-images.githubusercontent.com/9147189/125170847-98eb4480-e1ce-11eb-9920-6d646fbb0013.png)
 
