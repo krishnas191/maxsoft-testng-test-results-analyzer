@@ -40,7 +40,7 @@ generation for test executions.
 - Automatically generates the Extent Report after the test execution.
 - Reporter details can be configured through a property file.
 - No need to implement classes for Extent reporter or Test Analysis reporter.
-- Easy to use.
+- Simple and easy to use.
 
 ## Technologies/Frameworks Used
 - Java
@@ -55,8 +55,11 @@ generation for test executions.
 - Linux
 - Mac OS
 
-## Supported Languages
+## Supported Language
 - Java
+
+## Supported Test Runner
+- TestNG
 
 ## How to use
 **Pre-Requisites:**
@@ -188,7 +191,7 @@ public class LoginTest {
 
 ```
 
-7. Create the "**testng.xml**" by adding the "**MaxSoft TestNG Test Results Analyzer**" class.
+7. Create the "**testng.xml**" by adding the "**com.maxsoft.testngtestresultsanalyzer.ReportListener**" listener class.
 
 ```xml
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
