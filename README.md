@@ -17,7 +17,7 @@ generation for test executions.
 ![image](https://user-images.githubusercontent.com/9147189/125182967-29a63c80-e230-11eb-8711-5a5fbc948f1a.png)
 
 > Failure Analysis
-![image](https://user-images.githubusercontent.com/9147189/125182985-493d6500-e230-11eb-9136-caffb10d0918.png)
+![image](https://user-images.githubusercontent.com/9147189/125193741-b28e9980-e26b-11eb-9ad3-716367c69d77.png)
 
 > Skipped Analysis
 ![image](https://user-images.githubusercontent.com/9147189/125183007-7b4ec700-e230-11eb-866c-68831207753b.png)
