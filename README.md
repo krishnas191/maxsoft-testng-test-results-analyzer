@@ -82,7 +82,7 @@ generation for test executions.
     </dependencies>
 ```
 
-2. Create "**test-results-analyzer.properties**" in "***src/test/resources***".
+2. Create "**test-results-analyzer.properties**" in "***src/main/resources***".
 ```xml
 # Test Analyzer Report Configs
 extent_full_report_dir=./reports/html-reports
