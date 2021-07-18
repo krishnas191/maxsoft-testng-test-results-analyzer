@@ -19,7 +19,7 @@ public class Constants {
     public static final String FILE_SEPARATOR = File.separator;
     public static final String PROJECT_DIRECTORY = System.getProperty("user.dir");
     public static final String TEST_RESULTS_ANALYZER_PROPERTY_FILE_DIRECTORY = PROJECT_DIRECTORY + FILE_SEPARATOR
-            + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR
+            + "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources" + FILE_SEPARATOR
             + "test-results-analyzer.properties";
     public static final String EXTENT_FULL_REPORT_DIRECTORY = getProperty("extent_full_report_dir");
     public static final String SCREENSHOTS_DIRECTORY = getProperty("extent_screenshots_dir");

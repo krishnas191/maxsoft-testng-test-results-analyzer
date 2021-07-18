@@ -3,6 +3,7 @@ package tests;
 import com.maxsoft.testngtestresultsanalyzer.ReportListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -26,7 +27,12 @@ public class BaseTest {
     @BeforeMethod
     public void setUpBrowser() {
         WebDriverManager.chromedriver().setup();
-        setDriver(new ChromeDriver());
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--window-size=1920x1080");
+
+        setDriver(new ChromeDriver(chromeOptions));
+
         getDriver().manage().window().maximize();
         getDriver().manage().timeouts().implicitlyWait(30, SECONDS);
         getDriver().manage().timeouts().pageLoadTimeout(60, SECONDS);
