@@ -77,7 +77,7 @@ generation for test executions.
         <dependency>
             <groupId>com.github.osandadeshan</groupId>
             <artifactId>maxsoft-testng-test-results-analyzer</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 ```
