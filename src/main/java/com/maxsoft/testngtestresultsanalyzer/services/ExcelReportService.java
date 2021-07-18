@@ -6,6 +6,8 @@ import java.util.*;
 
 import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
 import static com.maxsoft.testngtestresultsanalyzer.ExcelFileGenerator.generateExcel;
+import static org.testng.ITestResult.FAILURE;
+import static org.testng.ITestResult.SKIP;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer
@@ -20,7 +22,9 @@ public class ExcelReportService {
 
     public Map<String, Object[]> getExcelDataMapForTestSummaryWorkSheet(List<ITestResult> testResultList) {
         Map<String, Object[]> excelDataMap = new TreeMap<>();
+
         excelDataMap.put("1", new Object[]{TEST_METHOD_NAME, EXECUTION_STATUS, ERROR_MESSAGE});
+
         testResultList.forEach(failedTest -> excelDataMap.put(
                 String.valueOf(excelDataMap.keySet().size() + 1),
                 new Object[]{
@@ -28,69 +32,16 @@ public class ExcelReportService {
                         failedTest.getStatus() == 1 ? PASSED : failedTest.getStatus() == 2 ? FAILED : SKIPPED,
                         failedTest.getStatus() != 1 ? failedTest.getThrowable().getMessage() : "",
                 }));
+
         return excelDataMap;
     }
 
     public Map<String, Object[]> getExcelDataMapForFailureAnalysisWorkSheet(List<ITestResult> testResultList) {
-        Map<String, List<String>> errorMap = new HashMap<>();
-
-        testResultList.forEach(testResult -> {
-            if (testResult.getStatus() == 2) {
-                String testName = testResult.getName();
-                String errorName = testResult.getThrowable().getMessage();
-
-                if (errorMap.containsKey(errorName)) {
-                    errorMap.get(errorName).add(testName);
-                } else {
-                    List<String> testList = new ArrayList<>();
-                    testList.add(testName);
-                    errorMap.put(errorName, testList);
-                }
-            }
-        });
-
-        Map<String, Object[]> excelDataMap = new TreeMap<>();
-        excelDataMap.put("1", new Object[]{FAILED_REASON, FAILED_TEST_COUNT, TEST_METHOD_NAMES});
-        errorMap.keySet().forEach(errorKey -> excelDataMap.put(
-                String.valueOf(excelDataMap.keySet().size() + 1),
-                new Object[]{
-                        errorKey,
-                        String.valueOf(errorMap.get(errorKey).size()),
-                        String.join("\n", errorMap.get(errorKey)),
-                }));
-
-        return excelDataMap;
+        return getExcelDataMap(testResultList, FAILURE, FAILED_REASON, FAILED_TEST_COUNT);
     }
 
     public Map<String, Object[]> getExcelDataMapForSkippedAnalysisWorkSheet(List<ITestResult> testResultList) {
-        Map<String, List<String>> errorMap = new HashMap<>();
-
-        testResultList.forEach(testResult -> {
-            if (testResult.getStatus() == 3) {
-                String testName = testResult.getName();
-                String errorName = testResult.getThrowable().getMessage();
-
-                if (errorMap.containsKey(errorName)) {
-                    errorMap.get(errorName).add(testName);
-                } else {
-                    List<String> testList = new ArrayList<>();
-                    testList.add(testName);
-                    errorMap.put(errorName, testList);
-                }
-            }
-        });
-
-        Map<String, Object[]> excelDataMap = new TreeMap<>();
-        excelDataMap.put("1", new Object[]{SKIPPED_REASON, SKIPPED_TEST_COUNT, TEST_METHOD_NAMES});
-        errorMap.keySet().forEach(errorKey -> excelDataMap.put(
-                String.valueOf(excelDataMap.keySet().size() + 1),
-                new Object[]{
-                        errorKey,
-                        String.valueOf(errorMap.get(errorKey).size()),
-                        String.join("\n", errorMap.get(errorKey)),
-                }));
-
-        return excelDataMap;
+        return getExcelDataMap(testResultList, SKIP, SKIPPED_REASON, SKIPPED_TEST_COUNT);
     }
 
     public void generateExcelReport(Map<String, Object[]> failedTestSummaryWorkSheetDataMap,
@@ -99,5 +50,37 @@ public class ExcelReportService {
         generateExcel(TEST_SUMMARY, failedTestSummaryWorkSheetDataMap, FAILURE_ANALYSIS, failureAnalysisWorkSheetDataMap,
                 SKIPPED_ANALYSIS, skippedAnalysisWorkSheetDataMap, TEST_ANALYSIS_REPORT_DIRECTORY
                         + FILE_SEPARATOR + TEST_ANALYSIS_REPORT_FILE_NAME_PREFIX + timestamp + ".xlsx");
+    }
+
+    private Map<String, Object[]> getExcelDataMap(List<ITestResult> testResultList, int executionStatus,
+                                                  String reasonColumnHeading, String testCountColumnHeading) {
+        Map<String, List<String>> errorMap = new HashMap<>();
+
+        testResultList.forEach(testResult -> {
+            if (testResult.getStatus() == executionStatus) {
+                String testName = testResult.getName();
+                String reason = testResult.getThrowable().getMessage();
+
+                if (errorMap.containsKey(reason)) {
+                    errorMap.get(reason).add(testName);
+                } else {
+                    List<String> testList = new ArrayList<>();
+                    testList.add(testName);
+                    errorMap.put(reason, testList);
+                }
+            }
+        });
+
+        Map<String, Object[]> excelDataMap = new TreeMap<>();
+        excelDataMap.put("1", new Object[]{reasonColumnHeading, testCountColumnHeading, TEST_METHOD_NAMES});
+        errorMap.keySet().forEach(errorKey -> excelDataMap.put(
+                String.valueOf(excelDataMap.keySet().size() + 1),
+                new Object[]{
+                        errorKey,
+                        String.valueOf(errorMap.get(errorKey).size()),
+                        String.join("\n", errorMap.get(errorKey)),
+                }));
+
+        return excelDataMap;
     }
 }
