@@ -32,7 +32,7 @@ public class ExtentReportService {
 
     private ExtentReports extent;
 
-    public void getExtentReporter(String timestamp) {
+    public void initializeExtentReporter(String timestamp) {
         extent = new ExtentReports();
 
         ExtentSparkReporter sparkAllTestsReporter = new ExtentSparkReporter(EXTENT_FULL_REPORT_DIRECTORY
