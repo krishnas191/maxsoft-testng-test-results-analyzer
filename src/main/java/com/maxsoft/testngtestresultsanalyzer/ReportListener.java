@@ -32,7 +32,7 @@ public class ReportListener implements ITestListener {
     @Override
     public void onStart(ITestContext iTestContext) {
         extentReportService = new ExtentReportService();
-        extentReportService.getExtentReporter(timestamp);
+        extentReportService.initializeExtentReporter(timestamp);
         excelReportService = new ExcelReportService();
     }
 

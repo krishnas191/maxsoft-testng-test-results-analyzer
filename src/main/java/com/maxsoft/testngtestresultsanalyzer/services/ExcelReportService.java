@@ -30,7 +30,7 @@ public class ExcelReportService {
                 new Object[]{
                         failedTest.getName(),
                         failedTest.getStatus() == 1 ? PASSED : failedTest.getStatus() == 2 ? FAILED : SKIPPED,
-                        failedTest.getStatus() != 1 ? failedTest.getThrowable().getMessage() : "",
+                        failedTest.getStatus() != 1 ? failedTest.getThrowable().toString() : "",
                 }));
 
         return excelDataMap;
@@ -59,7 +59,7 @@ public class ExcelReportService {
         testResultList.forEach(testResult -> {
             if (testResult.getStatus() == executionStatus) {
                 String testName = testResult.getName();
-                String reason = testResult.getThrowable().getMessage();
+                String reason = testResult.getThrowable().toString();
 
                 if (errorMap.containsKey(reason)) {
                     errorMap.get(reason).add(testName);
