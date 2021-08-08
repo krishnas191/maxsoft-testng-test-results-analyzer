@@ -83,7 +83,7 @@ public class ExtentReportService {
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
                 .createNode("<b> Error Details: </b>")
-                .fail("<b> Error Message: </b> <br />" + iTestResult.getThrowable().getMessage())
+                .fail("<b> Error Message: </b> <br />" + iTestResult.getThrowable().toString())
                 .fail(iTestResult.getThrowable());
 
         String screenshotPath = takeScreenshotAndReturnFilePath(iTestResult.getName(), timestamp);
