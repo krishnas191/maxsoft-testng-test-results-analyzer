@@ -32,15 +32,22 @@ public class MixedTest extends BaseTest {
         assertEquals(homePage.getProfileName(), "Osanda Deshan Nimalarathna");
     }
 
-    @SuppressWarnings("TestFailedLine")
+    @SuppressWarnings({"TestFailedLine"})
     @Category("Failing category in MixedTest class")
     @Test(description = "Failing test simulation")
-    public void testFailingMethod() {
+    public void testFailingMethod1() {
         assertEquals(homePage.getProfileName(), "Osanda Deshan");
     }
 
+    @SuppressWarnings("TestFailedLine2")
+    @Category("Failing category in MixedTest class")
+    @Test(description = "Failing test simulation")
+    public void testFailingMethod2() {
+        assertEquals(homePage.getInvalidLocator(), "");
+    }
+
     @Category("Skipping category in MixedTest class")
-    @Test(description = "Skipping test simulation", dependsOnMethods = "testFailingMethod")
+    @Test(description = "Skipping test simulation", dependsOnMethods = "testFailingMethod1")
     public void testSkippingMethod() {
         System.out.println("'testSkippingMethod' method will skip");
     }

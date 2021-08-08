@@ -52,4 +52,6 @@ public class Constants {
     // Skipped Analysis worksheet constants
     public static final String SKIPPED_REASON = "Skipped Reason";
     public static final String SKIPPED_TEST_COUNT = "Skipped Test Count";
+
+    public static final String NEW_LINE = "\n";
 }

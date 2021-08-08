@@ -17,6 +17,7 @@ import java.io.IOException;
  * Description     : This is the Exception class to simulate test exceptions
  **/
 
+@SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
 @Listeners(ReportListener.class)
 public class ExceptionTest {
 
