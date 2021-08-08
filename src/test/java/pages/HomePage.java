@@ -16,6 +16,7 @@ public class HomePage {
 
     private final By profileNameLabel = By.xpath("//span[@itemprop='name']");
     private final By usernameLabel = By.xpath("//span[@itemprop='additionalName']");
+    private final By invalidLocator = By.xpath("//span[@itemprop='name1']");
 
     private final WebDriver driver;
 
@@ -29,5 +30,9 @@ public class HomePage {
 
     public String getUsername() {
         return driver.findElement(usernameLabel).getText().trim();
+    }
+
+    public String getInvalidLocator() {
+        return driver.findElement(invalidLocator).getText();
     }
 }

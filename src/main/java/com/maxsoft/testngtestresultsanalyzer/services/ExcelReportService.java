@@ -25,13 +25,25 @@ public class ExcelReportService {
 
         excelDataMap.put("1", new Object[]{TEST_METHOD_NAME, EXECUTION_STATUS, ERROR_MESSAGE});
 
-        testResultList.forEach(failedTest -> excelDataMap.put(
-                String.valueOf(excelDataMap.keySet().size() + 1),
-                new Object[]{
-                        failedTest.getName(),
-                        failedTest.getStatus() == 1 ? PASSED : failedTest.getStatus() == 2 ? FAILED : SKIPPED,
-                        failedTest.getStatus() != 1 ? failedTest.getThrowable().toString() : "",
-                }));
+        testResultList.forEach(testResult ->
+        {
+            String error = null;
+
+            if (testResult.getStatus() != 1) {
+                error = testResult.getThrowable().toString();
+
+                if (error.contains(NEW_LINE))
+                    error = error.substring(0, error.indexOf(NEW_LINE));
+            }
+
+            excelDataMap.put(
+                    String.valueOf(excelDataMap.keySet().size() + 1),
+                    new Object[]{
+                            testResult.getName(),
+                            testResult.getStatus() == 1 ? PASSED : testResult.getStatus() == 2 ? FAILED : SKIPPED,
+                            testResult.getStatus() != 1 ? error : "",
+                    });
+        });
 
         return excelDataMap;
     }
@@ -60,6 +72,7 @@ public class ExcelReportService {
             if (testResult.getStatus() == executionStatus) {
                 String testName = testResult.getName();
                 String reason = testResult.getThrowable().toString();
+                if (reason.contains(NEW_LINE)) reason = reason.substring(0, reason.indexOf(NEW_LINE));
 
                 if (errorMap.containsKey(reason)) {
                     errorMap.get(reason).add(testName);
