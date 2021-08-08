@@ -78,12 +78,17 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestFailure(ITestResult iTestResult, String timestamp) {
+        String errorMessage = iTestResult.getThrowable().toString();
+
+        if (errorMessage.contains(NEW_LINE))
+            errorMessage = errorMessage.substring(0, errorMessage.indexOf(NEW_LINE));
+
         ExtentTest failedTest = extent.createTest(iTestResult.getName());
         failedTest.info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
                 .createNode("<b> Error Details: </b>")
-                .fail("<b> Error Message: </b> <br />" + iTestResult.getThrowable().toString())
+                .fail("<b> Error Message: </b> <br />" + errorMessage)
                 .fail(iTestResult.getThrowable());
 
         String screenshotPath = takeScreenshotAndReturnFilePath(iTestResult.getName(), timestamp);
@@ -100,13 +105,18 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSkipped(ITestResult iTestResult) {
+        String errorMessage = iTestResult.getThrowable().toString();
+
+        if (errorMessage.contains(NEW_LINE))
+            errorMessage = errorMessage.substring(0, errorMessage.indexOf(NEW_LINE));
+
         ExtentTest skippedTest = extent.createTest(iTestResult.getName());
         skippedTest
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
                 .createNode("<b> Error Details: </b>")
-                .skip("<b> Error Message: </b> <br />" + iTestResult.getThrowable().getMessage())
+                .skip("<b> Error Message: </b> <br />" + errorMessage)
                 .skip(iTestResult.getThrowable());
 
         String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
