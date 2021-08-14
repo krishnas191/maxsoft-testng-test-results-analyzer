@@ -26,13 +26,13 @@ public class PassingTest extends BaseTest {
         homePage = new HomePage(getDriver());
     }
 
-    @Category("Passing category in PassingTest class")
+    @Category("Passing")
     @Test(description = "Passing test simulation 1")
     public void testPassingMethod1() {
         assertEquals(homePage.getProfileName(), "Osanda Deshan Nimalarathna");
     }
 
-    @Category("Passing category in PassingTest class")
+    @Category("Passing")
     @Test(description = "Passing test simulation 2")
     public void testPassingMethod2() {
         assertEquals(homePage.getUsername(), "osandadeshan");

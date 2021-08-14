@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
  * Version         : 1.0.0
  * Date            : 7/10/2021
  * Time            : 12:34 PM
- * Description     : This is the annotation reader class that can use to read values of the annotations on test methods
+ * Description     : This is the annotation reader class that can used to read values of the annotations on test methods
  **/
 
 public class AnnotationReader {

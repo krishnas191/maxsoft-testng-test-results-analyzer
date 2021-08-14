@@ -21,7 +21,7 @@ import java.util.Map;
  * Description     : This is the listener class that used to listen to the TestNG test execution and create the reports
  **/
 
-public class ReportListener implements ITestListener {
+public class TestAnalyzeReportListener implements ITestListener {
 
     private static final String timestamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
     private final List<ITestResult> testResultsList = new ArrayList<>();

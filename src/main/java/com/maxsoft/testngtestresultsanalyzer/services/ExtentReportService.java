@@ -17,6 +17,7 @@ import static com.aventstack.extentreports.reporter.configuration.ViewName.*;
 import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
 import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
 import static com.maxsoft.testngtestresultsanalyzer.PropertyFileReader.getProperty;
+import static com.maxsoft.testngtestresultsanalyzer.ThrowableHelper.getErrorMessage;
 import static com.maxsoft.testngtestresultsanalyzer.annotations.AnnotationReader.getTestMethodCategory;
 
 /**
@@ -30,11 +31,9 @@ import static com.maxsoft.testngtestresultsanalyzer.annotations.AnnotationReader
 
 public class ExtentReportService {
 
-    private ExtentReports extent;
+    private static final ExtentReports extentReports = new ExtentReports();
 
     public void initializeExtentReporter(String timestamp) {
-        extent = new ExtentReports();
-
         ExtentSparkReporter sparkAllTestsReporter = new ExtentSparkReporter(EXTENT_FULL_REPORT_DIRECTORY
                 + FILE_SEPARATOR + EXTENT_REPORT_FILE_NAME_PREFIX + timestamp + ".html")
                 .viewConfigurer()
@@ -42,7 +41,7 @@ public class ExtentReportService {
                 .as(new ViewName[]{DASHBOARD, TEST, CATEGORY, EXCEPTION})
                 .apply();
 
-        extent.attachReporter(sparkAllTestsReporter);
+        extentReports.attachReporter(sparkAllTestsReporter);
 
         try {
 
@@ -54,11 +53,11 @@ public class ExtentReportService {
             sparkAllTestsReporter.config().setDocumentTitle(getProperty("extent_document_title"));
             sparkAllTestsReporter.config().setReportName(getProperty("extent_reporter_name"));
 
-            extent.setSystemInfo("Application Name", getProperty("application_name"));
-            extent.setSystemInfo("Environment", getProperty("environment"));
-            extent.setSystemInfo("Browser", getProperty("browser"));
-            extent.setSystemInfo("Operating System", getProperty("operating_system"));
-            extent.setSystemInfo("Test Developer", getProperty("test_developer"));
+            extentReports.setSystemInfo("Application Name", getProperty("application_name"));
+            extentReports.setSystemInfo("Environment", getProperty("environment"));
+            extentReports.setSystemInfo("Browser", getProperty("browser"));
+            extentReports.setSystemInfo("Operating System", getProperty("operating_system"));
+            extentReports.setSystemInfo("Test Developer", getProperty("test_developer"));
 
         } catch (Exception ex) {
             sparkAllTestsReporter.config().setTheme(Theme.STANDARD);
@@ -66,7 +65,7 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSuccess(ITestResult iTestResult) {
-        ExtentTest passedTest = extent.createTest(iTestResult.getName())
+        ExtentTest passedTest = extentReports.createTest(iTestResult.getName())
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription());
@@ -78,17 +77,12 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestFailure(ITestResult iTestResult, String timestamp) {
-        String errorMessage = iTestResult.getThrowable().toString();
-
-        if (errorMessage.contains(NEW_LINE))
-            errorMessage = errorMessage.substring(0, errorMessage.indexOf(NEW_LINE));
-
-        ExtentTest failedTest = extent.createTest(iTestResult.getName());
+        ExtentTest failedTest = extentReports.createTest(iTestResult.getName());
         failedTest.info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
                 .createNode("<b> Error Details: </b>")
-                .fail("<b> Error Message: </b> <br />" + errorMessage)
+                .fail("<b> Error Message: </b> <br />" + getErrorMessage(iTestResult.getThrowable()))
                 .fail(iTestResult.getThrowable());
 
         String screenshotPath = takeScreenshotAndReturnFilePath(iTestResult.getName(), timestamp);
@@ -105,18 +99,13 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSkipped(ITestResult iTestResult) {
-        String errorMessage = iTestResult.getThrowable().toString();
-
-        if (errorMessage.contains(NEW_LINE))
-            errorMessage = errorMessage.substring(0, errorMessage.indexOf(NEW_LINE));
-
-        ExtentTest skippedTest = extent.createTest(iTestResult.getName());
+        ExtentTest skippedTest = extentReports.createTest(iTestResult.getName());
         skippedTest
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
                 .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
                 .createNode("<b> Error Details: </b>")
-                .skip("<b> Error Message: </b> <br />" + errorMessage)
+                .skip("<b> Error Message: </b> <br />" + getErrorMessage(iTestResult.getThrowable()))
                 .skip(iTestResult.getThrowable());
 
         String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
@@ -126,7 +115,7 @@ public class ExtentReportService {
     }
 
     public void flushExtentReport() {
-        extent.flush();
+        extentReports.flush();
     }
 
     private String takeScreenshotAndReturnFilePath(String screenshotName, String timestamp) {

@@ -1,6 +1,6 @@
 package tests;
 
-import com.maxsoft.testngtestresultsanalyzer.ReportListener;
+import com.maxsoft.testngtestresultsanalyzer.TestAnalyzeReportListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,7 +21,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * Description     : This is the base test class that used to extend in all other test classes
  **/
 
-@Listeners(ReportListener.class)
+@Listeners(TestAnalyzeReportListener.class)
 public class BaseTest {
 
     @BeforeMethod

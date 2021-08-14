@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
  * Version         : 1.0.0
  * Date            : 7/2/2021
  * Time            : 7:45 PM
- * Description     : This is the excel file generator class that is used to generate the excel file
+ * Description     : This is the Excel file generator class that is used to generate the Excel file
  **/
 
 public class ExcelFileGenerator {
@@ -71,7 +71,7 @@ public class ExcelFileGenerator {
             headerRowCellStyle.setBorderRight(BorderStyle.MEDIUM);
             headerRowCellStyle.setBorderLeft(BorderStyle.MEDIUM);
 
-            // Set other rows cell style
+            // Set other rows' cell style
             cellStyle.setBorderBottom(BorderStyle.MEDIUM);
             cellStyle.setBorderTop(BorderStyle.MEDIUM);
             cellStyle.setBorderRight(BorderStyle.MEDIUM);

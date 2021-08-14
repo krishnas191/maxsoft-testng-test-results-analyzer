@@ -6,6 +6,7 @@ import java.util.*;
 
 import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
 import static com.maxsoft.testngtestresultsanalyzer.ExcelFileGenerator.generateExcel;
+import static com.maxsoft.testngtestresultsanalyzer.ThrowableHelper.getErrorMessage;
 import static org.testng.ITestResult.FAILURE;
 import static org.testng.ITestResult.SKIP;
 
@@ -15,7 +16,7 @@ import static org.testng.ITestResult.SKIP;
  * Version         : 1.0.0
  * Date            : 7/4/2021
  * Time            : 2:57 PM
- * Description     : This is the excel report service class that implements the excel report generation
+ * Description     : This is the test analyzer report service class that implements the test analyzer report generation
  **/
 
 public class ExcelReportService {
@@ -27,19 +28,16 @@ public class ExcelReportService {
 
         testResultList.forEach(testResult ->
         {
-            String error = null;
+            String error = "";
 
             if (testResult.getStatus() != 1) {
-                error = testResult.getThrowable().toString();
-
-                if (error.contains(NEW_LINE))
-                    error = error.substring(0, error.indexOf(NEW_LINE));
+                error = getErrorMessage(testResult.getThrowable());
             }
 
             excelDataMap.put(
                     String.valueOf(excelDataMap.keySet().size() + 1),
                     new Object[]{
-                            testResult.getName(),
+                            testResult.getTestClass().getRealClass().getSimpleName() + "." + testResult.getName(),
                             testResult.getStatus() == 1 ? PASSED : testResult.getStatus() == 2 ? FAILED : SKIPPED,
                             testResult.getStatus() != 1 ? error : "",
                     });
@@ -68,11 +66,11 @@ public class ExcelReportService {
                                                   String reasonColumnHeading, String testCountColumnHeading) {
         Map<String, List<String>> errorMap = new HashMap<>();
 
-        testResultList.forEach(testResult -> {
+        testResultList.forEach(testResult ->
+        {
             if (testResult.getStatus() == executionStatus) {
-                String testName = testResult.getName();
-                String reason = testResult.getThrowable().toString();
-                if (reason.contains(NEW_LINE)) reason = reason.substring(0, reason.indexOf(NEW_LINE));
+                String testName = testResult.getTestClass().getRealClass().getSimpleName() + "." + testResult.getName();
+                String reason = getErrorMessage(testResult.getThrowable());
 
                 if (errorMap.containsKey(reason)) {
                     errorMap.get(reason).add(testName);
