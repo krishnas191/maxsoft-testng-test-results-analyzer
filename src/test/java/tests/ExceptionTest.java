@@ -1,12 +1,15 @@
 package tests;
 
-import com.maxsoft.testngtestresultsanalyzer.ReportListener;
 import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.HomePage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import static com.maxsoft.testngtestresultsanalyzer.DriverHolder.getDriver;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Project Name    : maxsoft-testng-test-results-analyzer
@@ -18,41 +21,71 @@ import java.io.IOException;
  **/
 
 @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
-@Listeners(ReportListener.class)
-public class ExceptionTest {
+public class ExceptionTest extends BaseTest {
 
-    @Category("Failing category 1 in ExceptionTest class")
+    private HomePage homePage;
+
+    @BeforeMethod
+    public void before() {
+        homePage = new HomePage(getDriver());
+    }
+
+    @Category("NullPointerException")
     @Test(description = "NullPointerException test simulation 1")
     public void testNullPointerExceptionMethod1() {
         String text = null;
         System.out.println(text.equals("NullPointer"));
     }
 
-    @Category("Failing category 1 in ExceptionTest class")
-    @Test(description = "NullPointerException test simulation 1")
+    @Category("NullPointerException")
+    @Test(description = "NullPointerException test simulation 2")
     public void testNullPointerExceptionMethod2() {
         String text = null;
         System.out.println(text.equals("NullPointer"));
     }
 
-    @Category("Failing category 2 in ExceptionTest class")
+    @Category("FileNotFoundException")
     @Test(description = "FileNotFoundException test simulation 1")
     public void testFileNotFoundExceptionMethod1() throws IOException {
         FileInputStream fileInputStream = new FileInputStream("./exception/exception.txt");
         fileInputStream.available();
     }
 
-    @Category("Failing category 2 in ExceptionTest class")
+    @Category("FileNotFoundException")
     @Test(description = "FileNotFoundException test simulation 2")
     public void testFileNotFoundExceptionMethod2() throws IOException {
         FileInputStream fileInputStream = new FileInputStream("./exception/exception.txt");
         fileInputStream.available();
     }
 
-    @Category("Failing category 2 in ExceptionTest class")
+    @Category("FileNotFoundException")
     @Test(description = "FileNotFoundException test simulation 3")
     public void testFileNotFoundExceptionMethod3() throws IOException {
         FileInputStream fileInputStream = new FileInputStream("./exception/exception.txt");
         fileInputStream.available();
+    }
+
+    @Category("NoSuchElementException")
+    @Test(description = "NoSuchElementException test simulation 1")
+    public void testNoSuchElementExceptionMethod1() {
+        assertEquals(homePage.getInvalidLocator(), "");
+    }
+
+    @Category("NoSuchElementException")
+    @Test(description = "NoSuchElementException test simulation 2")
+    public void testNoSuchElementExceptionMethod2() {
+        assertEquals(homePage.getInvalidLocator(), "");
+    }
+
+    @Category("InvalidElementStateException")
+    @Test(description = "InvalidElementStateException test simulation 1")
+    public void testInvalidElementStateExceptionMethod1() {
+        homePage.clickOnHeading();
+    }
+
+    @Category("InvalidElementStateException")
+    @Test(description = "InvalidElementStateException test simulation 2")
+    public void testInvalidElementStateExceptionMethod2() {
+        homePage.clickOnHeading();
     }
 }

@@ -17,6 +17,7 @@ public class HomePage {
     private final By profileNameLabel = By.xpath("//span[@itemprop='name']");
     private final By usernameLabel = By.xpath("//span[@itemprop='additionalName']");
     private final By invalidLocator = By.xpath("//span[@itemprop='name1']");
+    private final By h = By.xpath("//h3");
 
     private final WebDriver driver;
 
@@ -34,5 +35,9 @@ public class HomePage {
 
     public String getInvalidLocator() {
         return driver.findElement(invalidLocator).getText();
+    }
+
+    public void clickOnHeading() {
+        driver.findElement(h).clear();
     }
 }

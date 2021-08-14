@@ -1,6 +1,6 @@
 package tests;
 
-import com.maxsoft.testngtestresultsanalyzer.ReportListener;
+import com.maxsoft.testngtestresultsanalyzer.TestAnalyzeReportListener;
 import com.maxsoft.testngtestresultsanalyzer.annotations.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -17,7 +17,7 @@ import static org.testng.Assert.fail;
  * Description     : This is the skipping class to simulate test skipping
  **/
 
-@Listeners(ReportListener.class)
+@Listeners(TestAnalyzeReportListener.class)
 public class SkippingTest {
 
     @BeforeMethod
@@ -25,13 +25,13 @@ public class SkippingTest {
         fail("Failure simulated from SkippingTest.java");
     }
 
-    @Category("Skipping category in SkippingTest class")
+    @Category("Skipping")
     @Test(description = "Skipping test simulation 1")
     public void testSkippingMethod1() {
         System.out.println("'testSkippingMethod1' method will skip");
     }
 
-    @Category("Skipping category in SkippingTest class")
+    @Category("Skipping")
     @Test(description = "Skipping test simulation 2")
     public void testSkippingMethod2() {
         System.out.println("'testSkippingMethod2' method will skip");
