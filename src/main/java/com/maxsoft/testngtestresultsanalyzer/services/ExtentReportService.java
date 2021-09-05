@@ -65,10 +65,14 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSuccess(ITestResult iTestResult) {
+        String iTestDescription = iTestResult.getMethod().getDescription();
+
         ExtentTest passedTest = extentReports.createTest(iTestResult.getName())
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
-                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
-                .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription());
+                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
+
+        if (iTestDescription != null)
+            passedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
 
         String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
 
@@ -77,10 +81,16 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestFailure(ITestResult iTestResult, String timestamp) {
-        ExtentTest failedTest = extentReports.createTest(iTestResult.getName());
-        failedTest.info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
-                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
-                .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
+        String iTestDescription = iTestResult.getMethod().getDescription();
+
+        ExtentTest failedTest = extentReports.createTest(iTestResult.getName())
+                .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
+                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
+
+        if (iTestDescription != null)
+            failedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
+
+        failedTest
                 .createNode("<b> Error Details: </b>")
                 .fail("<b> Error Message: </b> <br />" + getErrorMessage(iTestResult.getThrowable()))
                 .fail(iTestResult.getThrowable());
@@ -99,11 +109,16 @@ public class ExtentReportService {
     }
 
     public void updateExtentReportOnTestSkipped(ITestResult iTestResult) {
-        ExtentTest skippedTest = extentReports.createTest(iTestResult.getName());
-        skippedTest
+        String iTestDescription = iTestResult.getMethod().getDescription();
+
+        ExtentTest skippedTest = extentReports.createTest(iTestResult.getName())
                 .info("<b> Test Class: </b> <br />" + iTestResult.getTestClass().getName())
-                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName())
-                .info("<b> Test Method Description: </b> <br />" + iTestResult.getMethod().getDescription())
+                .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
+
+        if (iTestDescription != null)
+            skippedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
+
+        skippedTest
                 .createNode("<b> Error Details: </b>")
                 .skip("<b> Error Message: </b> <br />" + getErrorMessage(iTestResult.getThrowable()))
                 .skip(iTestResult.getThrowable());

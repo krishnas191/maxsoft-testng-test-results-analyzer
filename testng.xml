@@ -10,6 +10,7 @@
             <class name="tests.SkippingTest"/>
             <class name="tests.MixedTest"/>
             <class name="tests.ExceptionTest"/>
+            <class name="tests.ReportAttributeTest"/>
         </classes>
     </test>
 </suite>
