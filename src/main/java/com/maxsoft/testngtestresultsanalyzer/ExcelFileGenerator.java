@@ -104,15 +104,15 @@ public class ExcelFileGenerator {
         int numberOfSheets = ((Workbook) ExcelFileGenerator.workbook).getNumberOfSheets();
         IntStream.range(0, numberOfSheets).mapToObj(((Workbook) ExcelFileGenerator.workbook)::getSheetAt)
                 .filter(sheet -> sheet.getPhysicalNumberOfRows() > 0).forEach(sheet -> {
-            Row row = sheet.getRow(sheet.getFirstRowNum());
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                int columnIndex = cell.getColumnIndex();
-                sheet.autoSizeColumn(columnIndex);
-                int currentColumnWidth = sheet.getColumnWidth(columnIndex);
-                sheet.setColumnWidth(columnIndex, Math.min(currentColumnWidth, 36000));
-            }
-        });
+                    Row row = sheet.getRow(sheet.getFirstRowNum());
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    while (cellIterator.hasNext()) {
+                        Cell cell = cellIterator.next();
+                        int columnIndex = cell.getColumnIndex();
+                        sheet.autoSizeColumn(columnIndex);
+                        int currentColumnWidth = sheet.getColumnWidth(columnIndex);
+                        sheet.setColumnWidth(columnIndex, Math.min(currentColumnWidth, 36000));
+                    }
+                });
     }
 }

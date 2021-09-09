@@ -72,7 +72,8 @@ public class ExtentReportService {
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
 
         if (iTestDescription != null)
-            passedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
+            if (!iTestDescription.isEmpty())
+                passedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
 
         String category = getTestMethodCategory(iTestResult.getTestClass().getRealClass(), iTestResult.getName());
 
@@ -88,7 +89,8 @@ public class ExtentReportService {
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
 
         if (iTestDescription != null)
-            failedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
+            if (!iTestDescription.isEmpty())
+                failedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
 
         failedTest
                 .createNode("<b> Error Details: </b>")
@@ -116,7 +118,8 @@ public class ExtentReportService {
                 .info("<b> Test Method Name: </b> <br />" + iTestResult.getName());
 
         if (iTestDescription != null)
-            skippedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
+            if (!iTestDescription.isEmpty())
+                skippedTest.info("<b> Test Method Description: </b> <br />" + iTestDescription);
 
         skippedTest
                 .createNode("<b> Error Details: </b>")

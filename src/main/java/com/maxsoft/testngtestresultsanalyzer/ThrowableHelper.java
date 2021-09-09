@@ -18,7 +18,7 @@ public class ThrowableHelper {
     public static String getErrorMessage(Throwable throwable) {
         String errorMessage = throwable.toString();
 
-        if(throwable instanceof WebDriverException) {
+        if (throwable instanceof WebDriverException) {
             if (errorMessage.contains(NEW_LINE))
                 errorMessage = errorMessage.substring(0, errorMessage.indexOf(NEW_LINE));
         }
