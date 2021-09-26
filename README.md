@@ -11,20 +11,35 @@ generation for test executions.
 
 #### 1. Test Analysis Report Features
 > Test Summary
-![image](https://user-images.githubusercontent.com/9147189/125182967-29a63c80-e230-11eb-8711-5a5fbc948f1a.png)
+![image](https://user-images.githubusercontent.com/9147189/134811616-b62b150e-bf45-4f5b-8967-23d3d8e9342e.png)
 
-> Failure Analysis
-![image](https://user-images.githubusercontent.com/9147189/125193741-b28e9980-e26b-11eb-9ad3-716367c69d77.png)
+> Failure Analysis - Table View
+![image](https://user-images.githubusercontent.com/9147189/134811889-10b094a3-ae2a-465b-9abc-ac4d6aa65b75.png)
 
-> Skipped Analysis
-![image](https://user-images.githubusercontent.com/9147189/125183007-7b4ec700-e230-11eb-866c-68831207753b.png)
+> Failure Analysis - Bar Chart
+![image](https://user-images.githubusercontent.com/9147189/134811923-aa7abb7f-ef51-4c40-87f4-fd163e569744.png)
+ 
+> Failure Analysis - Pie Chart
+![image](https://user-images.githubusercontent.com/9147189/134811840-2c4c2294-aed5-4eeb-9c3f-954f943da3a4.png)
+
+> Skipped Analysis - Table View
+![image](https://user-images.githubusercontent.com/9147189/134811999-21b291f9-139f-46ef-8ffa-03c5644c0147.png)
+
+> Skipped Analysis - Bar Chart
+![image](https://user-images.githubusercontent.com/9147189/134812036-da0da0d6-7484-4750-ba1c-10fc3c973ed5.png)
+
+> Skipped Analysis - Pie Chart
+![image](https://user-images.githubusercontent.com/9147189/134812059-fb22bdf5-8153-40a5-b3a9-b261ec00b2bb.png)
 
 #### 2. Extent Report Features
 > Dashboard
 ![image](https://user-images.githubusercontent.com/9147189/125170847-98eb4480-e1ce-11eb-9920-6d646fbb0013.png)
 
-> Tests
+> Tests - List View
 ![image](https://user-images.githubusercontent.com/9147189/125170925-1c0c9a80-e1cf-11eb-8a93-1fc082faab0c.png)
+
+> Tests - Single View
+![image](https://user-images.githubusercontent.com/9147189/134812119-71bafdd3-cfd1-4b85-a8b4-7c41330d645b.png)
 
 > Categories
 ![image](https://user-images.githubusercontent.com/9147189/125170962-43636780-e1cf-11eb-9767-1ef11709a687.png)
@@ -34,7 +49,7 @@ generation for test executions.
 
 ## Advantages
 - Automatically generates the Test Analysis Report after the test execution.
-- Automatically generates the Extent Report after the test execution.
+- Automatically generates the Extent Report with screenshots after the test execution.
 - Reporter details can be configured through a property file.
 - No need to implement classes for Extent reporter or Test Analysis reporter.
 - Simple and easy to use.
@@ -77,7 +92,7 @@ generation for test executions.
         <dependency>
             <groupId>com.github.osandadeshan</groupId>
             <artifactId>maxsoft-testng-test-results-analyzer</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 ```
