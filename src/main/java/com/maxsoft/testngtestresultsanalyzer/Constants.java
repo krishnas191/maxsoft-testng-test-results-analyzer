@@ -48,10 +48,14 @@ public class Constants {
     public static final String FAILED_REASON = "Failed Reason";
     public static final String FAILED_TEST_COUNT = "Failed Test Count";
     public static final String TEST_METHOD_NAMES = "Test Method Name(s)";
+    public static final String FAILED_TEST_ANALYSIS_BAR_CHART_NAME = "Failed Test Analysis - Bar Chart";
+    public static final String FAILED_TEST_ANALYSIS_PIE_CHART_NAME = "Failed Test Analysis - Pie Chart";
 
     // Skipped Analysis worksheet constants
     public static final String SKIPPED_REASON = "Skipped Reason";
     public static final String SKIPPED_TEST_COUNT = "Skipped Test Count";
+    public static final String SKIPPED_TEST_ANALYSIS_BAR_CHART_NAME = "Skipped Test Analysis - Bar Chart";
+    public static final String SKIPPED_TEST_ANALYSIS_PIE_CHART_NAME = "Skipped Test Analysis - Pie Chart";
 
     public static final String NEW_LINE = "\n";
 }

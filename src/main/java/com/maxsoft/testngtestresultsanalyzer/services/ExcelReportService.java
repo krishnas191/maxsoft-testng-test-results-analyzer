@@ -54,10 +54,10 @@ public class ExcelReportService {
         return getExcelDataMap(testResultList, SKIP, SKIPPED_REASON, SKIPPED_TEST_COUNT);
     }
 
-    public void generateExcelReport(Map<String, Object[]> failedTestSummaryWorkSheetDataMap,
+    public void generateExcelReport(Map<String, Object[]> testSummaryWorkSheetDataMap,
                                     Map<String, Object[]> failureAnalysisWorkSheetDataMap,
                                     Map<String, Object[]> skippedAnalysisWorkSheetDataMap, String timestamp) {
-        generateExcel(TEST_SUMMARY, failedTestSummaryWorkSheetDataMap, FAILURE_ANALYSIS, failureAnalysisWorkSheetDataMap,
+        generateExcel(TEST_SUMMARY, testSummaryWorkSheetDataMap, FAILURE_ANALYSIS, failureAnalysisWorkSheetDataMap,
                 SKIPPED_ANALYSIS, skippedAnalysisWorkSheetDataMap, TEST_ANALYSIS_REPORT_DIRECTORY
                         + FILE_SEPARATOR + TEST_ANALYSIS_REPORT_FILE_NAME_PREFIX + timestamp + ".xlsx");
     }

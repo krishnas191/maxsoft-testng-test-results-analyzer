@@ -1,6 +1,7 @@
 package com.maxsoft.testngtestresultsanalyzer;
 
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -11,7 +12,10 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
+
+import static com.maxsoft.testngtestresultsanalyzer.Constants.*;
 
 /**
  * Project Name    : maxsoft-test-results-analyzer
@@ -30,17 +34,24 @@ public class ExcelFileGenerator {
     private static final CellStyle headerRowCellStyle = workbook.createCellStyle();
     private static final Font headerRowFont = workbook.createFont();
 
-    public static void generateExcel(String firstWorkSheetName, Map<String, Object[]> firstExcelDataMap,
-                                     String secondWorkSheetName, Map<String, Object[]> secondExcelDataMap,
-                                     String thirdWorkSheetName, Map<String, Object[]> thirdExcelDataMap,
+    public static void generateExcel(String allTestsWorkSheetName, Map<String, Object[]> allTestsExcelDataMap,
+                                     String failedTestsWorkSheetName, Map<String, Object[]> failedTestsExcelDataMap,
+                                     String skippedTestsWorkSheetName, Map<String, Object[]> skippedTestsExcelDataMap,
                                      String filePath) {
 
         // Prepare data object for each worksheet to write to the Excel file
-        prepareExcelDataMapToWriteToTheExcelFile(firstWorkSheetName, firstExcelDataMap);
-        prepareExcelDataMapToWriteToTheExcelFile(secondWorkSheetName, secondExcelDataMap);
-        prepareExcelDataMapToWriteToTheExcelFile(thirdWorkSheetName, thirdExcelDataMap);
+        prepareExcelDataMapToWriteToTheExcelFile(allTestsWorkSheetName, allTestsExcelDataMap);
+        prepareExcelDataMapToWriteToTheExcelFile(failedTestsWorkSheetName, failedTestsExcelDataMap);
+        prepareExcelDataMapToWriteToTheExcelFile(skippedTestsWorkSheetName, skippedTestsExcelDataMap);
 
         autoSizeColumns();
+
+        // Prepare bar charts and pie charts for each worksheet to write to the Excel file
+        ChartHelper chartHelper = new ChartHelper(workbook);
+        chartHelper.generateCharts(FAILURE_ANALYSIS, failedTestsExcelDataMap, FAILED_TEST_ANALYSIS_BAR_CHART_NAME,
+                FAILED_TEST_ANALYSIS_PIE_CHART_NAME, FAILED_TEST_COUNT, FAILED_REASON);
+        chartHelper.generateCharts(SKIPPED_ANALYSIS, skippedTestsExcelDataMap, SKIPPED_TEST_ANALYSIS_BAR_CHART_NAME,
+                SKIPPED_TEST_ANALYSIS_PIE_CHART_NAME, SKIPPED_TEST_COUNT, SKIPPED_REASON);
 
         // Write the workbook as an Excel file
         try {
@@ -88,8 +99,12 @@ public class ExcelFileGenerator {
                 int cellId = 0;
 
                 for (Object obj : objectArr) {
-                    Cell cell = row.createCell(cellId++);
-                    cell.setCellValue((String) obj);
+                    XSSFCell cell = row.createCell(cellId++);
+                    if (isNaturalNumber((String) obj)) {
+                        cell.setCellValue(Integer.parseInt((String) obj));
+                    } else {
+                        cell.setCellValue((String) obj);
+                    }
                     if (key.equals("1")) {
                         cell.setCellStyle(headerRowCellStyle);
                     } else {
@@ -111,8 +126,12 @@ public class ExcelFileGenerator {
                         int columnIndex = cell.getColumnIndex();
                         sheet.autoSizeColumn(columnIndex);
                         int currentColumnWidth = sheet.getColumnWidth(columnIndex);
-                        sheet.setColumnWidth(columnIndex, Math.min(currentColumnWidth, 36000));
+                        sheet.setColumnWidth(columnIndex, Math.min(currentColumnWidth, 33000));
                     }
                 });
+    }
+
+    private static boolean isNaturalNumber(String input) {
+        return input != null && Pattern.compile("^\\d+$").matcher(input).matches();
     }
 }
